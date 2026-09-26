@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const quotationController = require('../controllers/quotationController');
+const orderController = require('../controllers/orderController');
 const { authenticate } = require('../middleware/authMiddleware');
 
 const router = Router();
@@ -18,5 +19,8 @@ router.get('/:id', quotationController.getById);
 
 // PATCH /api/quotations/:id/status - Update quotation status
 router.patch('/:id/status', quotationController.updateStatus);
+
+// POST /api/quotations/:id/convert - Convert accepted quotation into Sales Order
+router.post('/:id/convert', orderController.convertFromQuotation);
 
 module.exports = router;
