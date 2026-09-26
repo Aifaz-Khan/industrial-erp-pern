@@ -21,7 +21,7 @@ server.on('error', (err) => {
   process.exit(1);
 });
 
-// Graceful shutdown management for AWS / Docker container lifecycle
+// Graceful shutdown management for AWS App Runner / process lifecycle
 const handleGracefulShutdown = (signal) => {
   console.log(`\n[INFO] Received ${signal}. Commencing graceful server shutdown...`);
   server.close(() => {
