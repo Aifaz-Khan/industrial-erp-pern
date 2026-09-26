@@ -54,71 +54,83 @@ class QuotationService {
     });
 
     // 5. Generate unique quotation number
-    let quotationNumber = await this.generateQuotationNumber();
+    const year = new Date().getFullYear();
+    const count = await prisma.quotation.count();
+    let quotationNumber = `QT-${year}-${String(count + 1).padStart(4, '0')}`;
     let exists = await prisma.quotation.findUnique({ where: { quotationNumber } });
-    let attempt = 1;
-    while (exists) {
-      const year = new Date().getFullYear();
-      const count = (await prisma.quotation.count()) + attempt;
-      quotationNumber = `QT-${year}-${String(count).padStart(4, '0')}`;
-      exists = await prisma.quotation.findUnique({ where: { quotationNumber } });
-      attempt++;
+    if (exists) {
+      const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+      quotationNumber = `QT-${year}-${String(count + 1).padStart(4, '0')}-${randomSuffix}`;
     }
 
-    // 6. Execute atomic creation & enquiry status update in Prisma Transaction
-    const newQuotation = await prisma.$transaction(async (tx) => {
-      const quote = await tx.quotation.create({
-        data: {
-          quotationNumber,
-          customerId: data.customerId,
-          enquiryId: data.enquiryId || null,
-          createdById: userId,
-          validUntil: new Date(data.validUntil),
-          status: 'DRAFT',
-          subtotal: financials.subtotal,
-          discountPercentage: financials.discountPercentage,
-          discountAmount: financials.discountAmount,
-          taxPercentage: financials.taxPercentage,
-          taxAmount: financials.taxAmount,
-          grandTotal: financials.grandTotal,
-          notes: data.notes || null,
-          items: {
-            create: financials.items.map((item) => ({
-              productId: item.productId,
-              quantity: item.quantity,
-              unitPrice: item.unitPrice,
-              lineTotal: item.lineTotal,
-            })),
-          },
-        },
-        include: {
-          customer: true,
-          createdBy: {
-            select: {
-              id: true,
-              name: true,
-              email: true,
-              role: true,
+    // 6. Execute atomic creation & enquiry status update in Prisma Transaction with retry
+    let newQuotation = null;
+    let attempts = 0;
+    while (!newQuotation && attempts < 5) {
+      try {
+        newQuotation = await prisma.$transaction(async (tx) => {
+          const quote = await tx.quotation.create({
+            data: {
+              quotationNumber,
+              customerId: data.customerId,
+              enquiryId: data.enquiryId || null,
+              createdById: userId,
+              validUntil: new Date(data.validUntil),
+              status: 'DRAFT',
+              subtotal: financials.subtotal,
+              discountPercentage: financials.discountPercentage,
+              discountAmount: financials.discountAmount,
+              taxPercentage: financials.taxPercentage,
+              taxAmount: financials.taxAmount,
+              grandTotal: financials.grandTotal,
+              notes: data.notes || null,
+              items: {
+                create: financials.items.map((item) => ({
+                  productId: item.productId,
+                  quantity: item.quantity,
+                  unitPrice: item.unitPrice,
+                  lineTotal: item.lineTotal,
+                })),
+              },
             },
-          },
-          items: {
             include: {
-              product: true,
+              customer: true,
+              createdBy: {
+                select: {
+                  id: true,
+                  name: true,
+                  email: true,
+                  role: true,
+                },
+              },
+              items: {
+                include: {
+                  product: true,
+                },
+              },
             },
-          },
-        },
-      });
+          });
 
-      // If linked to an enquiry, transition enquiry status from NEW to QUOTED
-      if (data.enquiryId && enquiry.status === 'NEW') {
-        await tx.enquiry.update({
-          where: { id: data.enquiryId },
-          data: { status: 'QUOTED' },
+          // If linked to an enquiry, transition enquiry status from NEW to QUOTED
+          if (data.enquiryId && enquiry && enquiry.status === 'NEW') {
+            await tx.enquiry.update({
+              where: { id: data.enquiryId },
+              data: { status: 'QUOTED' },
+            });
+          }
+
+          return quote;
         });
+      } catch (err) {
+        if (err.code === 'P2002' && err.meta?.target?.includes('quotationNumber')) {
+          attempts++;
+          const randomSuffix = Math.floor(1000 + Math.random() * 9000);
+          quotationNumber = `QT-${year}-${String(count + attempts).padStart(4, '0')}-${randomSuffix}`;
+        } else {
+          throw err;
+        }
       }
-
-      return quote;
-    });
+    }
 
     return newQuotation;
   }
