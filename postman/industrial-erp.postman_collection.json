@@ -18,8 +18,7 @@
               "raw": "{{baseUrl}}/health",
               "host": ["{{baseUrl}}"],
               "path": ["health"]
-            },
-            "description": "Checks server uptime, memory usage, and operational status."
+            }
           },
           "response": []
         }
@@ -35,11 +34,10 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "// Auto-extract JWT and save to environment variable",
                   "var jsonData = pm.response.json();",
                   "if (jsonData.success && jsonData.data && jsonData.data.token) {",
                   "    pm.environment.set(\"token\", jsonData.data.token);",
-                  "    console.log(\"Saved Admin token to environment variable 'token'\");",
+                  "    console.log(\"Saved Admin token to environment\");",
                   "}"
                 ],
                 "type": "text/javascript"
@@ -48,12 +46,7 @@
           ],
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"email\": \"admin@industrial-erp.com\",\n  \"password\": \"AdminPassword123!\"\n}"
@@ -62,8 +55,7 @@
               "raw": "{{baseUrl}}/auth/login",
               "host": ["{{baseUrl}}"],
               "path": ["auth", "login"]
-            },
-            "description": "Authenticates ADMIN and automatically stores JWT token in environment."
+            }
           },
           "response": []
         },
@@ -74,11 +66,10 @@
               "listen": "test",
               "script": {
                 "exec": [
-                  "// Auto-extract JWT and save to environment variable",
                   "var jsonData = pm.response.json();",
                   "if (jsonData.success && jsonData.data && jsonData.data.token) {",
                   "    pm.environment.set(\"token\", jsonData.data.token);",
-                  "    console.log(\"Saved Sales token to environment variable 'token'\");",
+                  "    console.log(\"Saved Sales token to environment\");",
                   "}"
                 ],
                 "type": "text/javascript"
@@ -87,12 +78,7 @@
           ],
           "request": {
             "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
             "body": {
               "mode": "raw",
               "raw": "{\n  \"email\": \"sales@industrial-erp.com\",\n  \"password\": \"SalesPassword123!\"\n}"
@@ -101,8 +87,7 @@
               "raw": "{{baseUrl}}/auth/login",
               "host": ["{{baseUrl}}"],
               "path": ["auth", "login"]
-            },
-            "description": "Authenticates SALES user and stores JWT token in environment."
+            }
           },
           "response": []
         },
@@ -110,18 +95,12 @@
           "name": "3. Get Current User Profile (GET /api/auth/me)",
           "request": {
             "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
             "url": {
               "raw": "{{baseUrl}}/auth/me",
               "host": ["{{baseUrl}}"],
               "path": ["auth", "me"]
-            },
-            "description": "Retrieves the currently authenticated user's sanitized profile."
+            }
           },
           "response": []
         },
@@ -129,18 +108,190 @@
           "name": "4. Verify Admin-Only Route (RBAC Check)",
           "request": {
             "method": "GET",
-            "header": [
-              {
-                "key": "Authorization",
-                "value": "Bearer {{token}}"
-              }
-            ],
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
             "url": {
               "raw": "{{baseUrl}}/auth/admin-only",
               "host": ["{{baseUrl}}"],
               "path": ["auth", "admin-only"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Products & Inventory",
+      "item": [
+        {
+          "name": "1. Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Get Inventory Stock Overview (Physical, Reserved, Available)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/inventory",
+              "host": ["{{baseUrl}}"],
+              "path": ["inventory"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Customers",
+      "item": [
+        {
+          "name": "1. Get All Customers",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/customers",
+              "host": ["{{baseUrl}}"],
+              "path": ["customers"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Create New Customer",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"companyName\": \"Larsen & Turbo Heavy Systems\",\n  \"contactPerson\": \"Vikram Malhotra\",\n  \"mobile\": \"+91 98220 11223\",\n  \"email\": \"vikram@lnt-heavy.com\",\n  \"city\": \"Vadodara\"\n}"
             },
-            "description": "Returns 200 for ADMIN, and 403 Forbidden if accessed with a SALES token."
+            "url": {
+              "raw": "{{baseUrl}}/customers",
+              "host": ["{{baseUrl}}"],
+              "path": ["customers"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Enquiries",
+      "item": [
+        {
+          "name": "1. Create Customer Enquiry",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"810f49d1-fd10-4a3e-88c4-2d7d6a56d3ea\",\n  \"requiredDate\": \"2026-10-30\",\n  \"notes\": \"Requirement for plant expansion unit #3\",\n  \"items\": [\n    {\n      \"productId\": \"00c45d93-37f9-4d20-8057-d3516f85ace7\",\n      \"quantity\": 5,\n      \"targetPrice\": 18000\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/enquiries",
+              "host": ["{{baseUrl}}"],
+              "path": ["enquiries"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Get All Enquiries",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/enquiries",
+              "host": ["{{baseUrl}}"],
+              "path": ["enquiries"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Get Enquiry by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/enquiries/:id",
+              "host": ["{{baseUrl}}"],
+              "path": ["enquiries", ":id"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Quotations",
+      "item": [
+        {
+          "name": "1. Create Quotation (Calculates Subtotal, GST, Grand Total Server-Side)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"810f49d1-fd10-4a3e-88c4-2d7d6a56d3ea\",\n  \"enquiryId\": null,\n  \"validUntil\": \"2026-11-30\",\n  \"discountPercentage\": 10,\n  \"taxPercentage\": 18,\n  \"notes\": \"Commercial terms: 30 days credit\",\n  \"items\": [\n    {\n      \"productId\": \"00c45d93-37f9-4d20-8057-d3516f85ace7\",\n      \"quantity\": 4,\n      \"unitPrice\": 18500\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/quotations",
+              "host": ["{{baseUrl}}"],
+              "path": ["quotations"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "2. Get All Quotations",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/quotations",
+              "host": ["{{baseUrl}}"],
+              "path": ["quotations"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Update Quotation Status (DRAFT -> SENT -> ACCEPTED)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"ACCEPTED\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/quotations/:id/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["quotations", ":id", "status"]
+            }
           },
           "response": []
         }

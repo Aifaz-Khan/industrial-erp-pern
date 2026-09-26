@@ -1,19 +1,30 @@
 const { Router } = require('express');
 const healthRoutes = require('./healthRoutes');
 const authRoutes = require('./authRoutes');
+const customerRoutes = require('./customerRoutes');
+const productRoutes = require('./productRoutes');
+const inventoryRoutes = require('./inventoryRoutes');
+const enquiryRoutes = require('./enquiryRoutes');
+const quotationRoutes = require('./quotationRoutes');
 
 const router = Router();
 
-// Mount Health Check endpoint
+// System Health
 router.use('/health', healthRoutes);
 
-// Mount Authentication routes
+// Authentication & Users
 router.use('/auth', authRoutes);
-// router.use('/customers', customerRoutes);
-// router.use('/enquiries', enquiryRoutes);
-// router.use('/quotations', quotationRoutes);
+
+// Master Data (Customers, Products, Inventory)
+router.use('/customers', customerRoutes);
+router.use('/products', productRoutes);
+router.use('/inventory', inventoryRoutes);
+
+// Transactional Workflows (Enquiries & Quotations)
+router.use('/enquiries', enquiryRoutes);
+router.use('/quotations', quotationRoutes);
+
+// Phase 4 will mount:
 // router.use('/sales-orders', salesOrderRoutes);
-// router.use('/products', productRoutes);
-// router.use('/inventory', inventoryRoutes);
 
 module.exports = router;
