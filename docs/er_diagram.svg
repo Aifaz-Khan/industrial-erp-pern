@@ -1,0 +1,405 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 900" width="1300" height="900" style="background:#ffffff; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.08"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#64748b"/>
+    </marker>
+  </defs>
+
+  <!-- Title & Header -->
+  <rect x="0" y="0" width="1300" height="60" fill="#0f172a"/>
+  <text x="30" y="37" fill="#ffffff" font-size="20" font-weight="700" letter-spacing="0.5">INDUSTRIAL B2B MANUFACTURING &amp; SUPPLY CHAIN ERP — RELATIONAL SCHEMA</text>
+  <text x="1050" y="37" fill="#94a3b8" font-size="13" font-weight="500">PostgreSQL (Prisma ORM)</text>
+
+  <!-- ================= ROW 1: MASTER DATA ================= -->
+
+  <!-- USER TABLE -->
+  <g transform="translate(40, 90)" filter="url(#shadow)">
+    <rect width="250" height="190" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <path d="M 0 6 A 6 6 0 0 1 6 0 L 244 0 A 6 6 0 0 1 250 6 L 250 36 L 0 36 Z" fill="#1e293b"/>
+    <text x="15" y="24" fill="#ffffff" font-size="14" font-weight="700">User</text>
+    <text x="190" y="24" fill="#94a3b8" font-size="11">System Account</text>
+    <line x1="0" y1="36" x2="250" y2="36" stroke="#cbd5e1" stroke-width="1"/>
+    
+    <text x="15" y="58" fill="#0284c7" font-weight="700" font-size="12">PK</text>
+    <text x="40" y="58" fill="#1e293b" font-weight="600" font-size="12">id</text>
+    <text x="165" y="58" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="15" y="80" fill="#059669" font-weight="700" font-size="12">UQ</text>
+    <text x="40" y="80" fill="#1e293b" font-size="12">email</text>
+    <text x="165" y="80" fill="#64748b" font-size="11">VARCHAR(255)</text>
+
+    <text x="40" y="102" fill="#1e293b" font-size="12">password</text>
+    <text x="165" y="102" fill="#64748b" font-size="11">VARCHAR (bcrypt)</text>
+
+    <text x="40" y="124" fill="#1e293b" font-size="12">name</text>
+    <text x="165" y="124" fill="#64748b" font-size="11">VARCHAR(100)</text>
+
+    <text x="40" y="146" fill="#1e293b" font-size="12">role</text>
+    <text x="165" y="146" fill="#d97706" font-size="11" font-weight="600">ADMIN | SALES</text>
+
+    <text x="40" y="168" fill="#64748b" font-size="11">createdAt / updatedAt</text>
+    <text x="165" y="168" fill="#64748b" font-size="11">TIMESTAMP</text>
+  </g>
+
+  <!-- CUSTOMER TABLE -->
+  <g transform="translate(340, 90)" filter="url(#shadow)">
+    <rect width="270" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <path d="M 0 6 A 6 6 0 0 1 6 0 L 264 0 A 6 6 0 0 1 270 6 L 270 36 L 0 36 Z" fill="#1e293b"/>
+    <text x="15" y="24" fill="#ffffff" font-size="14" font-weight="700">Customer</text>
+    <text x="195" y="24" fill="#94a3b8" font-size="11">Client Account</text>
+    <line x1="0" y1="36" x2="270" y2="36" stroke="#cbd5e1" stroke-width="1"/>
+
+    <text x="15" y="58" fill="#0284c7" font-weight="700" font-size="12">PK</text>
+    <text x="40" y="58" fill="#1e293b" font-weight="600" font-size="12">id</text>
+    <text x="180" y="58" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="40" y="80" fill="#1e293b" font-size="12">companyName</text>
+    <text x="180" y="80" fill="#64748b" font-size="11">VARCHAR(150)</text>
+
+    <text x="40" y="102" fill="#1e293b" font-size="12">contactPerson</text>
+    <text x="180" y="102" fill="#64748b" font-size="11">VARCHAR(100)</text>
+
+    <text x="40" y="124" fill="#1e293b" font-size="12">mobile</text>
+    <text x="180" y="124" fill="#64748b" font-size="11">VARCHAR(20)</text>
+
+    <text x="15" y="146" fill="#059669" font-weight="700" font-size="12">UQ</text>
+    <text x="40" y="146" fill="#1e293b" font-size="12">email</text>
+    <text x="180" y="146" fill="#64748b" font-size="11">VARCHAR(255)</text>
+
+    <text x="40" y="168" fill="#1e293b" font-size="12">city</text>
+    <text x="180" y="168" fill="#64748b" font-size="11">VARCHAR(100)</text>
+
+    <text x="40" y="190" fill="#64748b" font-size="11">createdAt / updatedAt</text>
+    <text x="180" y="190" fill="#64748b" font-size="11">TIMESTAMP</text>
+  </g>
+
+  <!-- PRODUCT TABLE -->
+  <g transform="translate(660, 90)" filter="url(#shadow)">
+    <rect width="270" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <path d="M 0 6 A 6 6 0 0 1 6 0 L 264 0 A 6 6 0 0 1 270 6 L 270 36 L 0 36 Z" fill="#1e293b"/>
+    <text x="15" y="24" fill="#ffffff" font-size="14" font-weight="700">Product</text>
+    <text x="195" y="24" fill="#94a3b8" font-size="11">Catalog SKU</text>
+    <line x1="0" y1="36" x2="270" y2="36" stroke="#cbd5e1" stroke-width="1"/>
+
+    <text x="15" y="58" fill="#0284c7" font-weight="700" font-size="12">PK</text>
+    <text x="40" y="58" fill="#1e293b" font-weight="600" font-size="12">id</text>
+    <text x="175" y="58" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="15" y="80" fill="#059669" font-weight="700" font-size="12">UQ</text>
+    <text x="40" y="80" fill="#1e293b" font-size="12">productCode</text>
+    <text x="175" y="80" fill="#64748b" font-size="11">VARCHAR(50)</text>
+
+    <text x="40" y="102" fill="#1e293b" font-size="12">productName</text>
+    <text x="175" y="102" fill="#64748b" font-size="11">VARCHAR(200)</text>
+
+    <text x="40" y="124" fill="#1e293b" font-size="12">category</text>
+    <text x="175" y="124" fill="#64748b" font-size="11">VARCHAR(100)</text>
+
+    <text x="40" y="146" fill="#1e293b" font-size="12">unit</text>
+    <text x="175" y="146" fill="#64748b" font-size="11">VARCHAR(30)</text>
+
+    <text x="40" y="168" fill="#1e293b" font-size="12">basePrice</text>
+    <text x="175" y="168" fill="#64748b" font-size="11">DECIMAL(12,2)</text>
+
+    <text x="40" y="190" fill="#64748b" font-size="11">createdAt / updatedAt</text>
+    <text x="175" y="190" fill="#64748b" font-size="11">TIMESTAMP</text>
+  </g>
+
+  <!-- INVENTORY TABLE (1:1 with Product) -->
+  <g transform="translate(980, 90)" filter="url(#shadow)">
+    <rect width="280" height="210" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <path d="M 0 6 A 6 6 0 0 1 6 0 L 274 0 A 6 6 0 0 1 280 6 L 280 36 L 0 36 Z" fill="#0f766e"/>
+    <text x="15" y="24" fill="#ffffff" font-size="14" font-weight="700">Inventory</text>
+    <text x="180" y="24" fill="#ccfbf1" font-size="11">Stock Balances (1:1)</text>
+    <line x1="0" y1="36" x2="280" y2="36" stroke="#cbd5e1" stroke-width="1"/>
+
+    <text x="15" y="58" fill="#0284c7" font-weight="700" font-size="12">PK</text>
+    <text x="40" y="58" fill="#1e293b" font-weight="600" font-size="12">id</text>
+    <text x="185" y="58" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="15" y="80" fill="#6366f1" font-weight="700" font-size="12">FK</text>
+    <text x="40" y="80" fill="#1e293b" font-weight="600" font-size="12">productId</text>
+    <text x="185" y="80" fill="#64748b" font-size="11">UUID (UNIQUE)</text>
+
+    <text x="40" y="105" fill="#1e293b" font-size="12">physicalQuantity</text>
+    <text x="185" y="105" fill="#64748b" font-size="11">INTEGER</text>
+
+    <text x="40" y="130" fill="#1e293b" font-size="12">reservedQuantity</text>
+    <text x="185" y="130" fill="#64748b" font-size="11">INTEGER</text>
+
+    <!-- Virtual Available Metric -->
+    <rect x="25" y="148" width="230" height="26" rx="4" fill="#f0fdf4" stroke="#86efac" stroke-width="1"/>
+    <text x="35" y="165" fill="#166534" font-size="11" font-weight="600">Available = Physical - Reserved</text>
+
+    <text x="40" y="195" fill="#64748b" font-size="11">updatedAt</text>
+    <text x="185" y="195" fill="#64748b" font-size="11">TIMESTAMP</text>
+  </g>
+
+  <!-- 1:1 Product to Inventory Line -->
+  <line x1="930" y1="180" x2="980" y2="180" stroke="#0f766e" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+  <rect x="938" y="168" width="34" height="16" rx="3" fill="#ccfbf1"/>
+  <text x="944" y="180" fill="#0f766e" font-size="10" font-weight="700">1:1</text>
+
+  <!-- ================= ROW 2: COMMERCIAL PIPELINE ================= -->
+
+  <!-- ENQUIRY TABLE -->
+  <g transform="translate(40, 360)" filter="url(#shadow)">
+    <rect width="250" height="230" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <path d="M 0 6 A 6 6 0 0 1 6 0 L 244 0 A 6 6 0 0 1 250 6 L 250 36 L 0 36 Z" fill="#1e293b"/>
+    <text x="15" y="24" fill="#ffffff" font-size="14" font-weight="700">Enquiry</text>
+    <text x="175" y="24" fill="#94a3b8" font-size="11">Inbound RFQ</text>
+    <line x1="0" y1="36" x2="250" y2="36" stroke="#cbd5e1" stroke-width="1"/>
+
+    <text x="15" y="58" fill="#0284c7" font-weight="700" font-size="12">PK</text>
+    <text x="40" y="58" fill="#1e293b" font-weight="600" font-size="12">id</text>
+    <text x="160" y="58" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="15" y="80" fill="#059669" font-weight="700" font-size="12">UQ</text>
+    <text x="40" y="80" fill="#1e293b" font-size="12">enquiryNumber</text>
+    <text x="160" y="80" fill="#64748b" font-size="11">VARCHAR(50)</text>
+
+    <text x="15" y="102" fill="#6366f1" font-weight="700" font-size="12">FK</text>
+    <text x="40" y="102" fill="#1e293b" font-size="12">customerId</text>
+    <text x="160" y="102" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="15" y="124" fill="#6366f1" font-weight="700" font-size="12">FK</text>
+    <text x="40" y="124" fill="#1e293b" font-size="12">createdById</text>
+    <text x="160" y="124" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="40" y="146" fill="#1e293b" font-size="12">status</text>
+    <text x="160" y="146" fill="#0284c7" font-size="11" font-weight="600">NEW | QUOTED...</text>
+
+    <text x="40" y="168" fill="#1e293b" font-size="12">requiredDate</text>
+    <text x="160" y="168" fill="#64748b" font-size="11">TIMESTAMP</text>
+
+    <text x="40" y="190" fill="#1e293b" font-size="12">notes</text>
+    <text x="160" y="190" fill="#64748b" font-size="11">TEXT</text>
+
+    <text x="40" y="212" fill="#64748b" font-size="11">createdAt</text>
+    <text x="160" y="212" fill="#64748b" font-size="11">TIMESTAMP</text>
+  </g>
+
+  <!-- ENQUIRY ITEM TABLE -->
+  <g transform="translate(340, 360)" filter="url(#shadow)">
+    <rect width="240" height="170" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <path d="M 0 6 A 6 6 0 0 1 6 0 L 234 0 A 6 6 0 0 1 240 6 L 240 36 L 0 36 Z" fill="#334155"/>
+    <text x="15" y="24" fill="#ffffff" font-size="14" font-weight="700">EnquiryItem</text>
+    <text x="165" y="24" fill="#94a3b8" font-size="11">Line Items</text>
+    <line x1="0" y1="36" x2="240" y2="36" stroke="#cbd5e1" stroke-width="1"/>
+
+    <text x="15" y="58" fill="#0284c7" font-weight="700" font-size="12">PK</text>
+    <text x="40" y="58" fill="#1e293b" font-weight="600" font-size="12">id</text>
+    <text x="145" y="58" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="15" y="80" fill="#6366f1" font-weight="700" font-size="12">FK</text>
+    <text x="40" y="80" fill="#1e293b" font-size="12">enquiryId</text>
+    <text x="145" y="80" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="15" y="102" fill="#6366f1" font-weight="700" font-size="12">FK</text>
+    <text x="40" y="102" fill="#1e293b" font-size="12">productId</text>
+    <text x="145" y="102" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="40" y="124" fill="#1e293b" font-size="12">quantity</text>
+    <text x="145" y="124" fill="#64748b" font-size="11">INTEGER</text>
+
+    <text x="40" y="146" fill="#1e293b" font-size="12">targetPrice</text>
+    <text x="145" y="146" fill="#64748b" font-size="11">DECIMAL(12,2)</text>
+  </g>
+
+  <!-- 1:N Enquiry to EnquiryItem line -->
+  <line x1="290" y1="420" x2="340" y2="420" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="305" y="413" fill="#64748b" font-size="10" font-weight="600">1:N</text>
+
+  <!-- QUOTATION TABLE -->
+  <g transform="translate(630, 360)" filter="url(#shadow)">
+    <rect width="300" height="280" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <path d="M 0 6 A 6 6 0 0 1 6 0 L 294 0 A 6 6 0 0 1 300 6 L 300 36 L 0 36 Z" fill="#1e293b"/>
+    <text x="15" y="24" fill="#ffffff" font-size="14" font-weight="700">Quotation</text>
+    <text x="180" y="24" fill="#94a3b8" font-size="11">Commercial Proposal</text>
+    <line x1="0" y1="36" x2="300" y2="36" stroke="#cbd5e1" stroke-width="1"/>
+
+    <text x="15" y="58" fill="#0284c7" font-weight="700" font-size="12">PK</text>
+    <text x="40" y="58" fill="#1e293b" font-weight="600" font-size="12">id</text>
+    <text x="195" y="58" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="15" y="78" fill="#059669" font-weight="700" font-size="12">UQ</text>
+    <text x="40" y="78" fill="#1e293b" font-size="12">quotationNumber</text>
+    <text x="195" y="78" fill="#64748b" font-size="11">VARCHAR(50)</text>
+
+    <text x="15" y="98" fill="#6366f1" font-weight="700" font-size="12">FK</text>
+    <text x="40" y="98" fill="#1e293b" font-size="12">customerId</text>
+    <text x="195" y="98" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="15" y="118" fill="#6366f1" font-weight="700" font-size="12">FK</text>
+    <text x="40" y="118" fill="#1e293b" font-size="12">enquiryId (optional)</text>
+    <text x="195" y="118" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="40" y="138" fill="#1e293b" font-size="12">status</text>
+    <text x="195" y="138" fill="#d97706" font-size="11" font-weight="600">DRAFT | ACCEPTED...</text>
+
+    <text x="40" y="158" fill="#1e293b" font-size="12">subtotal</text>
+    <text x="195" y="158" fill="#64748b" font-size="11">DECIMAL(12,2)</text>
+
+    <text x="40" y="178" fill="#1e293b" font-size="12">discountPercentage</text>
+    <text x="195" y="178" fill="#64748b" font-size="11">DECIMAL(5,2)</text>
+
+    <text x="40" y="198" fill="#1e293b" font-size="12">discountAmount</text>
+    <text x="195" y="198" fill="#64748b" font-size="11">DECIMAL(12,2)</text>
+
+    <text x="40" y="218" fill="#1e293b" font-size="12">taxPercentage / taxAmount</text>
+    <text x="195" y="218" fill="#64748b" font-size="11">GST (18%)</text>
+
+    <text x="40" y="238" fill="#047857" font-weight="700" font-size="12">grandTotal</text>
+    <text x="195" y="238" fill="#047857" font-weight="700" font-size="11">DECIMAL(12,2)</text>
+
+    <text x="40" y="258" fill="#64748b" font-size="11">validUntil / createdAt</text>
+    <text x="195" y="258" fill="#64748b" font-size="11">TIMESTAMP</text>
+  </g>
+
+  <!-- QUOTATION ITEM TABLE -->
+  <g transform="translate(980, 360)" filter="url(#shadow)">
+    <rect width="250" height="190" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <path d="M 0 6 A 6 6 0 0 1 6 0 L 244 0 A 6 6 0 0 1 250 6 L 250 36 L 0 36 Z" fill="#334155"/>
+    <text x="15" y="24" fill="#ffffff" font-size="14" font-weight="700">QuotationItem</text>
+    <text x="165" y="24" fill="#94a3b8" font-size="11">Quoted Lines</text>
+    <line x1="0" y1="36" x2="250" y2="36" stroke="#cbd5e1" stroke-width="1"/>
+
+    <text x="15" y="58" fill="#0284c7" font-weight="700" font-size="12">PK</text>
+    <text x="40" y="58" fill="#1e293b" font-weight="600" font-size="12">id</text>
+    <text x="150" y="58" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="15" y="80" fill="#6366f1" font-weight="700" font-size="12">FK</text>
+    <text x="40" y="80" fill="#1e293b" font-size="12">quotationId</text>
+    <text x="150" y="80" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="15" y="102" fill="#6366f1" font-weight="700" font-size="12">FK</text>
+    <text x="40" y="102" fill="#1e293b" font-size="12">productId</text>
+    <text x="150" y="102" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="40" y="124" fill="#1e293b" font-size="12">quantity</text>
+    <text x="150" y="124" fill="#64748b" font-size="11">INTEGER</text>
+
+    <text x="40" y="146" fill="#1e293b" font-size="12">unitPrice</text>
+    <text x="150" y="146" fill="#64748b" font-size="11">DECIMAL(12,2)</text>
+
+    <text x="40" y="168" fill="#1e293b" font-size="12">lineTotal</text>
+    <text x="150" y="168" fill="#64748b" font-size="11">DECIMAL(12,2)</text>
+  </g>
+
+  <!-- 1:N Quotation to QuotationItem line -->
+  <line x1="930" y1="440" x2="980" y2="440" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="945" y="433" fill="#64748b" font-size="10" font-weight="600">1:N</text>
+
+  <!-- ================= ROW 3: ORDER EXECUTION & DISPATCH ================= -->
+
+  <!-- SALES ORDER TABLE -->
+  <g transform="translate(180, 670)" filter="url(#shadow)">
+    <rect width="290" height="200" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <path d="M 0 6 A 6 6 0 0 1 6 0 L 284 0 A 6 6 0 0 1 290 6 L 290 36 L 0 36 Z" fill="#1e3a8a"/>
+    <text x="15" y="24" fill="#ffffff" font-size="14" font-weight="700">SalesOrder</text>
+    <text x="175" y="24" fill="#93c5fd" font-size="11">Confirmed Contract (1:1)</text>
+    <line x1="0" y1="36" x2="290" y2="36" stroke="#cbd5e1" stroke-width="1"/>
+
+    <text x="15" y="58" fill="#0284c7" font-weight="700" font-size="12">PK</text>
+    <text x="40" y="58" fill="#1e293b" font-weight="600" font-size="12">id</text>
+    <text x="180" y="58" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="15" y="80" fill="#059669" font-weight="700" font-size="12">UQ</text>
+    <text x="40" y="80" fill="#1e293b" font-size="12">orderNumber</text>
+    <text x="180" y="80" fill="#64748b" font-size="11">VARCHAR(50)</text>
+
+    <text x="15" y="102" fill="#6366f1" font-weight="700" font-size="12">FK</text>
+    <text x="40" y="102" fill="#1e293b" font-weight="600" font-size="12">quotationId</text>
+    <text x="180" y="102" fill="#64748b" font-size="11">UUID (UNIQUE)</text>
+
+    <text x="15" y="124" fill="#6366f1" font-weight="700" font-size="12">FK</text>
+    <text x="40" y="124" fill="#1e293b" font-size="12">customerId</text>
+    <text x="180" y="124" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="40" y="146" fill="#1e293b" font-size="12">status</text>
+    <text x="180" y="146" fill="#2563eb" font-size="11" font-weight="600">PENDING | CONFIRMED...</text>
+
+    <text x="40" y="168" fill="#1e293b" font-size="12">totalAmount</text>
+    <text x="180" y="168" fill="#64748b" font-size="11">DECIMAL(12,2)</text>
+
+    <text x="40" y="188" fill="#64748b" font-size="11">confirmedById / confirmedAt</text>
+    <text x="180" y="188" fill="#64748b" font-size="11">ADMIN AUDIT</text>
+  </g>
+
+  <!-- Quotation to SalesOrder 1:1 Arrow -->
+  <path d="M 630 500 L 400 500 L 400 670" fill="none" stroke="#2563eb" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+  <rect x="420" y="540" width="130" height="22" rx="4" fill="#dbeafe"/>
+  <text x="428" y="555" fill="#1e40af" font-size="10" font-weight="700">1:1 Convert (Unique FK)</text>
+
+  <!-- SALES ORDER ITEM TABLE -->
+  <g transform="translate(530, 670)" filter="url(#shadow)">
+    <rect width="250" height="170" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <path d="M 0 6 A 6 6 0 0 1 6 0 L 244 0 A 6 6 0 0 1 250 6 L 250 36 L 0 36 Z" fill="#334155"/>
+    <text x="15" y="24" fill="#ffffff" font-size="14" font-weight="700">SalesOrderItem</text>
+    <text x="165" y="24" fill="#94a3b8" font-size="11">Locked Lines</text>
+    <line x1="0" y1="36" x2="250" y2="36" stroke="#cbd5e1" stroke-width="1"/>
+
+    <text x="15" y="58" fill="#0284c7" font-weight="700" font-size="12">PK</text>
+    <text x="40" y="58" fill="#1e293b" font-weight="600" font-size="12">id</text>
+    <text x="150" y="58" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="15" y="80" fill="#6366f1" font-weight="700" font-size="12">FK</text>
+    <text x="40" y="80" fill="#1e293b" font-size="12">salesOrderId</text>
+    <text x="150" y="80" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="15" y="102" fill="#6366f1" font-weight="700" font-size="12">FK</text>
+    <text x="40" y="102" fill="#1e293b" font-size="12">productId</text>
+    <text x="150" y="102" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="40" y="124" fill="#1e293b" font-size="12">quantity</text>
+    <text x="150" y="124" fill="#64748b" font-size="11">INTEGER</text>
+
+    <text x="40" y="146" fill="#1e293b" font-size="12">unitPrice / lineTotal</text>
+    <text x="150" y="146" fill="#64748b" font-size="11">DECIMAL(12,2)</text>
+  </g>
+
+  <!-- 1:N SalesOrder to SalesOrderItem -->
+  <line x1="470" y1="740" x2="530" y2="740" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="490" y="733" fill="#64748b" font-size="10" font-weight="600">1:N</text>
+
+  <!-- DISPATCH TABLE -->
+  <g transform="translate(840, 670)" filter="url(#shadow)">
+    <rect width="280" height="200" rx="6" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+    <path d="M 0 6 A 6 6 0 0 1 6 0 L 274 0 A 6 6 0 0 1 280 6 L 280 36 L 0 36 Z" fill="#047857"/>
+    <text x="15" y="24" fill="#ffffff" font-size="14" font-weight="700">Dispatch</text>
+    <text x="170" y="24" fill="#a7f3d0" font-size="11">Logistics / Gate Pass (1:1)</text>
+    <line x1="0" y1="36" x2="280" y2="36" stroke="#cbd5e1" stroke-width="1"/>
+
+    <text x="15" y="58" fill="#0284c7" font-weight="700" font-size="12">PK</text>
+    <text x="40" y="58" fill="#1e293b" font-weight="600" font-size="12">id</text>
+    <text x="180" y="58" fill="#64748b" font-size="11">UUID</text>
+
+    <text x="15" y="80" fill="#059669" font-weight="700" font-size="12">UQ</text>
+    <text x="40" y="80" fill="#1e293b" font-size="12">dispatchNumber</text>
+    <text x="180" y="80" fill="#64748b" font-size="11">VARCHAR(50)</text>
+
+    <text x="15" y="102" fill="#6366f1" font-weight="700" font-size="12">FK</text>
+    <text x="40" y="102" fill="#1e293b" font-weight="600" font-size="12">salesOrderId</text>
+    <text x="180" y="102" fill="#64748b" font-size="11">UUID (UNIQUE)</text>
+
+    <text x="40" y="124" fill="#1e293b" font-size="12">vehicleNumber</text>
+    <text x="180" y="124" fill="#64748b" font-size="11">VARCHAR(50)</text>
+
+    <text x="40" y="146" fill="#1e293b" font-size="12">driverName</text>
+    <text x="180" y="146" fill="#64748b" font-size="11">VARCHAR(100)</text>
+
+    <text x="40" y="168" fill="#1e293b" font-size="12">dispatchDate</text>
+    <text x="180" y="168" fill="#64748b" font-size="11">TIMESTAMP</text>
+
+    <text x="40" y="188" fill="#64748b" font-size="11">dispatchedById</text>
+    <text x="180" y="188" fill="#64748b" font-size="11">ADMIN AUDIT</text>
+  </g>
+
+  <!-- SalesOrder to Dispatch 1:1 Arrow -->
+  <line x1="780" y1="755" x2="840" y2="755" stroke="#047857" stroke-width="2" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+  <rect x="792" y="743" width="36" height="16" rx="3" fill="#a7f3d0"/>
+  <text x="798" y="755" fill="#047857" font-size="10" font-weight="700">1:1</text>
+</svg>
