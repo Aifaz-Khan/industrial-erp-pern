@@ -6,6 +6,7 @@ const productRoutes = require('./productRoutes');
 const inventoryRoutes = require('./inventoryRoutes');
 const enquiryRoutes = require('./enquiryRoutes');
 const quotationRoutes = require('./quotationRoutes');
+const orderRoutes = require('./orderRoutes');
 
 const router = Router();
 
@@ -20,11 +21,9 @@ router.use('/customers', customerRoutes);
 router.use('/products', productRoutes);
 router.use('/inventory', inventoryRoutes);
 
-// Transactional Workflows (Enquiries & Quotations)
+// Transactional Workflows
 router.use('/enquiries', enquiryRoutes);
 router.use('/quotations', quotationRoutes);
-
-// Phase 4 will mount:
-// router.use('/sales-orders', salesOrderRoutes);
+router.use('/sales-orders', orderRoutes);
 
 module.exports = router;

@@ -260,6 +260,21 @@
               "path": ["quotations"]
             }
           },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.success && jsonData.data && jsonData.data.quotation) {",
+                  "    pm.environment.set(\"quotationId\", jsonData.data.quotation.id);",
+                  "    console.log(\"Auto-saved quotationId to environment:\", jsonData.data.quotation.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
           "response": []
         },
         {
@@ -288,10 +303,119 @@
               "raw": "{\n  \"status\": \"ACCEPTED\"\n}"
             },
             "url": {
-              "raw": "{{baseUrl}}/quotations/:id/status",
+              "raw": "{{baseUrl}}/quotations/{{quotationId}}/status",
               "host": ["{{baseUrl}}"],
-              "path": ["quotations", ":id", "status"]
+              "path": ["quotations", "{{quotationId}}", "status"]
             }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sales Orders & Dispatch",
+      "item": [
+        {
+          "name": "1. Convert Accepted Quotation to Sales Order",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "if (jsonData.success && jsonData.data && jsonData.data.order) {",
+                  "    pm.environment.set(\"orderId\", jsonData.data.order.id);",
+                  "    console.log(\"Auto-saved orderId to environment:\", jsonData.data.order.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/quotations/{{quotationId}}/convert",
+              "host": ["{{baseUrl}}"],
+              "path": ["quotations", "{{quotationId}}", "convert"]
+            },
+            "description": "Converts an ACCEPTED quotation into a Sales Order with PENDING status. Rejects DRAFT or REJECTED quotes."
+          },
+          "response": []
+        },
+        {
+          "name": "2. Get All Sales Orders",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/sales-orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["sales-orders"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "3. Get Sales Order by ID",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/sales-orders/{{orderId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["sales-orders", "{{orderId}}"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "4. Confirm Sales Order & Reserve Inventory (ADMIN Only)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/sales-orders/{{orderId}}/confirm",
+              "host": ["{{baseUrl}}"],
+              "path": ["sales-orders", "{{orderId}}", "confirm"]
+            },
+            "description": "ADMIN only: Checks available stock, locks row using PostgreSQL FOR UPDATE, increments reserved stock, sets status to CONFIRMED."
+          },
+          "response": []
+        },
+        {
+          "name": "5. Dispatch Confirmed Sales Order (ADMIN Only)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicleNumber\": \"MH-12-AB-9876\",\n  \"driverName\": \"Ramesh Patil\",\n  \"notes\": \"Dispatched via express road logistics\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/sales-orders/{{orderId}}/dispatch",
+              "host": ["{{baseUrl}}"],
+              "path": ["sales-orders", "{{orderId}}", "dispatch"]
+            },
+            "description": "ADMIN only: Decrements both physical and reserved stock counts, records vehicle/driver details, sets status to DISPATCHED."
+          },
+          "response": []
+        },
+        {
+          "name": "6. Cancel Sales Order & Release Stock (ADMIN Only)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": {
+              "raw": "{{baseUrl}}/sales-orders/{{orderId}}/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["sales-orders", "{{orderId}}", "cancel"]
+            },
+            "description": "ADMIN only: Cancels order and releases reserved stock back into available inventory."
           },
           "response": []
         }
