@@ -21,7 +21,24 @@
 
 ---
 
-## 2. Database Schema and Entity-Relationship (ER) Diagram
+## 2. Production Deployment and Infrastructure Architecture
+
+The application is deployed across a multi-cloud production architecture:
+
+| Tier | Cloud Provider | Technology & Runtime | Purpose & Configuration |
+|---|---|---|---|
+| **Frontend** | **Vercel** | React 18, Vite, Pure CSS3 | Global Edge CDN hosting the SPA with reverse proxy rewrites (`/api/*`) to AWS EC2 for seamless HTTPS security. |
+| **Backend API** | **AWS EC2** | Ubuntu 24.04 LTS, Node.js 20, PM2 | Hosted on an AWS virtual machine instance. Managed 24/7 by PM2 process supervisor with automated crash recovery and boot persistence. |
+| **Database** | **Neon** | Serverless PostgreSQL (v16) | Cloud-managed relational database cluster with SSL enforcement (`?sslmode=require`) and connection pooling. |
+
+### Infrastructure Workflow
+1. **AWS EC2 Hosting:** The Node.js Express API runs inside an AWS EC2 Ubuntu instance on port `5001`. PM2 ensures continuous uptime and background execution.
+2. **Neon PostgreSQL:** Database transactions, table migrations, and relational locks (`SELECT ... FOR UPDATE`) execute over encrypted SSL connections.
+3. **Vercel Edge Proxy:** Vercel serves the static React frontend over HTTPS and securely proxies API traffic to the AWS EC2 instance, eliminating browser mixed-content blocks and CORS overhead.
+
+---
+
+## 3. Database Schema and Entity-Relationship (ER) Diagram
 
 ### Entity-Relationship (ER) Diagram
 
@@ -196,7 +213,7 @@ erDiagram
 
 ---
 
-## 3. Project Setup
+## 4. Project Setup
 
 ### Prerequisites
 - Node.js (v18.x or v20.x recommended)
@@ -226,7 +243,7 @@ cd ..
 
 ---
 
-## 4. Database Setup
+## 5. Database Setup
 
 The project uses PostgreSQL with Prisma ORM. You can use a local PostgreSQL instance or a managed cloud database such as Neon PostgreSQL.
 
@@ -242,7 +259,7 @@ The project uses PostgreSQL with Prisma ORM. You can use a local PostgreSQL inst
 
 ---
 
-## 5. Environment Variables
+## 6. Environment Variables
 
 ### Backend Configuration
 Create a `.env` file inside the `backend` directory:
@@ -282,7 +299,7 @@ VITE_API_BASE_URL=http://localhost:5001/api
 
 ---
 
-## 6. Migration and Seed Instructions
+## 7. Migration and Seed Instructions
 
 Run all Prisma migrations and populate the database with initial master data (roles, users, products, inventory, and customers).
 
@@ -304,7 +321,7 @@ node prisma/seed.js
 
 ---
 
-## 7. How to Run Frontend and Backend
+## 8. How to Run Frontend and Backend
 
 ### Terminal 1: Backend Server
 ```bash
@@ -324,7 +341,7 @@ Open `http://localhost:5173` in your browser to view the application.
 
 ---
 
-## 8. How to Run Tests
+## 9. How to Run Tests
 
 The backend includes a comprehensive integration test suite built with Vitest and Supertest covering:
 - Authentication and Role-Based Access Control (RBAC)
@@ -341,7 +358,7 @@ npm test
 
 ---
 
-## 9. Test Login Credentials
+## 10. Test Login Credentials
 
 The seed script creates the following pre-configured user accounts:
 
